@@ -15,9 +15,15 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    # PUT YOUR CODE HERE
+    for x in plaintext:
+       if ord(x)<65:
+          ciphertext += x
+       elif ((ord(x) == 88) or (ord(x) == 89) or (ord(x) == 90) or (ord(x) == 120) or (ord(x) == 121) or (ord(x) == 122)):
+          ciphertext += chr(ord(x)-23)
+       else:
+          ciphertext += chr(ord(x)+shift)
     return ciphertext
-
+print(encrypt_caesar(""))
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
@@ -33,9 +39,15 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    # PUT YOUR CODE HERE
+    for x in ciphertext:
+       if ord(x)<65:
+          plaintext += x
+       elif ((ord(x) == 65) or (ord(x) == 66) or (ord(x) == 67) or (ord(x) == 97) or (ord(x) == 98) or (ord(x) == 99)):
+          plaintext += chr(ord(x)+23)
+       else:
+          plaintext += chr(ord(x)-shift)
     return plaintext
-
+print(decrypt_caesar(""))
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     """
