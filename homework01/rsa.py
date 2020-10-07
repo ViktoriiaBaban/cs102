@@ -30,8 +30,16 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    g = 1
+    if a < b:
+       for i in range(2,a+1):
+          if (a % i == 0) and (b % i == 0):
+             g = i
+    else:
+       for i in range(2,b+1):
+          if (a % i == 0) and (b % i == 0):
+             g = i
+    print(g)
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
