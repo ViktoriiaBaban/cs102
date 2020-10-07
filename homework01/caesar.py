@@ -1,5 +1,7 @@
 import typing as tp
 
+m='abcdefghijklmnopqrstuvwxyz'
+b='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
@@ -15,15 +17,22 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    for x in plaintext:
-       if (ord(x)<65) or ((ord(x)>90) and (ord(x)<97)) or (ord(x)>122):
-          ciphertext += x
-       else:
-           if (ord(x)+shift<65) or ((ord(x)+shift>90) and (ord(x)+shift<97)) or (ord(x)+shift>122):
-               ciphertext += chr(ord(x)+shift-26)
-           else:
-                ciphertext += chr(ord(x)+shift)
-    return ciphertext
+    for index, x in enumerate(plaintext):
+        if x != ' ':
+            t = b.find(x)
+            if t == -1:
+              t = m.find(x)
+              if t == -1:
+                ciphertext += x
+              else:
+                r = (t + shift) % len(m)
+                ciphertext += m[r]
+            else:
+              r = (t + shift) % len(b)
+              ciphertext += b[r]
+        else:
+            ciphertext += ' '
+    return ciphertext 
     
 print(encrypt_caesar(""))
 
@@ -41,15 +50,22 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    for x in ciphertext:
-       if (ord(x)<65) or ((ord(x)>90) and (ord(x)<97)) or (ord(x)>122):
-          plaintext += x
-       else:
-           if (ord(x)-shift<65) or ((ord(x)-shift>90) and (ord(x)-shift<97)) or (ord(x)-shift>122):
-               plaintext += chr(ord(x)-shift+26)
-           else:
-               plaintext += chr(ord(x)-shift)
-    return plaintext
+    for index, x in enumerate(ciphertext):
+        if x != ' ':
+            t = b.find(x)
+            if t == -1:
+              t = m.find(x)
+              if t == -1:
+                plaintext += x
+              else:
+                r = (t - shift) % len(m)
+                plaintext += m[r]
+            else:
+              r = (t - shift) % len(b)
+              plaintext += b[r]
+        else:
+            plaintext += ' '
+    return plaintext 
     
 print(decrypt_caesar(""))
 
