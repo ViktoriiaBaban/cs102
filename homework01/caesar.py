@@ -71,8 +71,31 @@ print(decrypt_caesar(""))
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     """
-    Brute force breaking a Caesar cipher.
+    >>> d = {"python", "java", "ruby"}
+    >>> caesar_breaker_brute_force("python", d)
+    0
+    >>> caesar_breaker_brute_force("sbwkrq", d)
+    3
     """
     best_shift = 0
-    # PUT YOUR CODE HERE
-    return best_shift
+    plaintext = ciphertext
+    while (plaintext not in dictionary):
+       best_shift += 1
+       plaintext = ""
+       for index, x in enumerate(ciphertext):
+           if x != ' ':
+               t = b.find(x)
+               if t == -1:
+                 t = m.find(x)
+                 if t == -1:
+                   plaintext += x
+                 else:
+                   r = (t - best_shift) % len(m)
+                   plaintext += m[r]
+               else:
+                 r = (t - best_shift) % len(b)
+                 plaintext += b[r]
+           else:
+               plaintext += ' '
+    return(best_shift)
+    
