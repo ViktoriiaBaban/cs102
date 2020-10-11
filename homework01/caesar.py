@@ -1,7 +1,6 @@
 import typing as tp
+import string
 
-m='abcdefghijklmnopqrstuvwxyz'
-b='ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     """
@@ -17,24 +16,23 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = ""
-    for index, x in enumerate(plaintext):
-        if x != ' ':
-            t = b.find(x)
-            if t == -1:
-              t = m.find(x)
-              if t == -1:
-                ciphertext += x
-              else:
-                r = (t + shift) % len(m)
-                ciphertext += m[r]
+    for x in plaintext:
+        if x != " ":
+            number = string.ascii_uppercase.find(x)
+            if number == -1:
+                number = string.ascii_lowercase.find(x)
+                if number == -1:
+                    ciphertext += x
+                else:
+                    result = (number + shift) % len(string.ascii_lowercase)
+                    ciphertext += string.ascii_lowercase[result]
             else:
-              r = (t + shift) % len(b)
-              ciphertext += b[r]
+                result = (number + shift) % len(string.ascii_uppercase)
+                ciphertext += string.ascii_uppercase[result]
         else:
-            ciphertext += ' '
-    return ciphertext 
-    
-print(encrypt_caesar(""))
+            ciphertext += " "
+    return ciphertext
+
 
 def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     """
@@ -50,24 +48,23 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = ""
-    for index, x in enumerate(ciphertext):
-        if x != ' ':
-            t = b.find(x)
-            if t == -1:
-              t = m.find(x)
-              if t == -1:
-                plaintext += x
-              else:
-                r = (t - shift) % len(m)
-                plaintext += m[r]
+    for x in ciphertext:
+        if x != " ":
+            number = string.ascii_uppercase.find(x)
+            if number == -1:
+                number = string.ascii_lowercase.find(x)
+                if number == -1:
+                    plaintext += x
+                else:
+                    result = (number - shift) % len(string.ascii_lowercase)
+                    plaintext += string.ascii_lowercase[result]
             else:
-              r = (t - shift) % len(b)
-              plaintext += b[r]
+                result = (number - shift) % len(string.ascii_uppercase)
+                plaintext += string.ascii_uppercase[result]
         else:
-            plaintext += ' '
-    return plaintext 
-    
-print(decrypt_caesar(""))
+            plaintext += " "
+    return plaintext
+
 
 def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     """
@@ -79,23 +76,22 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     """
     best_shift = 0
     plaintext = ciphertext
-    while (plaintext not in dictionary):
-       best_shift += 1
-       plaintext = ""
-       for index, x in enumerate(ciphertext):
-           if x != ' ':
-               t = b.find(x)
-               if t == -1:
-                 t = m.find(x)
-                 if t == -1:
-                   plaintext += x
-                 else:
-                   r = (t - best_shift) % len(m)
-                   plaintext += m[r]
-               else:
-                 r = (t - best_shift) % len(b)
-                 plaintext += b[r]
-           else:
-               plaintext += ' '
-    return(best_shift)
-    
+    while plaintext not in dictionary:
+        best_shift += 1
+        plaintext = ""
+        for x in ciphertext:
+            if x != " ":
+                number = string.ascii_uppercase.find(x)
+                if number == -1:
+                    numder = string.ascii_lowercase.find(x)
+                    if number == -1:
+                        plaintext += x
+                    else:
+                        result = (number - best_shift) % len(string.ascii_lowercase)
+                        plaintext += string.ascii_lowercase[result]
+                else:
+                    result = (number - best_shift) % len(string.ascii_uppercase)
+                    plaintext += string.ascii_uppercase[result]
+            else:
+                plaintext += " "
+    return best_shift
