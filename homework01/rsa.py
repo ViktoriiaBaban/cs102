@@ -13,16 +13,17 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    d = 2
-    for x in range(2,n):
-       if n % x == 0:
-          d += 1
+    divisor = 2
+    for x in range(2, n):
+        if n % x == 0:
+            divisor = 0
+            break
     if n != 1:
-       is_prime = d == 2
+        is_prime = divisor == 2
     else:
-       is_prime = False
-    return(is_prime)
-    pass
+        is_prime = False
+    return is_prime
+
 
 def gcd(a: int, b: int) -> int:
     """
@@ -33,15 +34,14 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    if (b != 0):
-       while (a % b != 0):
-          c = a % b
-          a = b
-          b = c
-       return(b)
+    if b != 0:
+        while a % b != 0:
+            c = a % b
+            a = b
+            b = c
+        return b
     else:
-       return(a)
-    pass
+        return a
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
@@ -53,24 +53,23 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     23
     """
     phi1 = phi
-    l = -1
-    m = []
-    while (phi % e != 0):
-       m.append([phi, e, phi % e, phi//e])
-       c = phi % e
-       phi = e
-       e = c
-       l += 1
+    line = -1
+    matrix = []
+    while phi % e != 0:
+        matrix.append([phi, e, phi % e, phi // e])
+        c = phi % e
+        phi = e
+        e = c
+        line += 1
     x = 0
     y = 1
-    while (l >= 0):
-       c = x - y * m[l][3]
-       x = y
-       y = c
-       l -= 1
+    while line >= 0:
+        c = x - y * matrix[line][3]
+        x = y
+        y = c
+        line -= 1
     d = y % phi1
-    return(d)
-    pass
+    return d
 
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
@@ -81,7 +80,7 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
 
     n = p * q
 
-    phi = (p-1) * (q-1)
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
     e = random.randrange(1, phi)
