@@ -1,5 +1,8 @@
-m = 'abcdefghijklmnopqrstuvwxyz'
-b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+import string
+
+upper = string.ascii_uppercase
+lower = string.ascii_lowercase
+
 
 def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     """
@@ -13,25 +16,23 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    space = 0
     for index, x in enumerate(plaintext):
-        if x != ' ':
-            t = b.find(x)
-            if t == -1:
-              t = m.find(x)
-              if t == -1:
-                ciphertext += x
-              else:
-                k = m.find(keyword[index % len(keyword)])
-                r = (t + k) % len(m)
-                ciphertext += m[r]
+        if x != " ":
+            number = upper.find(x)
+            if number == -1:
+                number = lower.find(x)
+                if number == -1:
+                    ciphertext += x
+                else:
+                    key = lower.find(keyword[index % len(keyword)])
+                    result = (number + key) % len(lower)
+                    ciphertext += lower[result]
             else:
-              k = b.find(keyword[index % len(keyword)])
-              r = (t + k) % len(b)
-              ciphertext += b[r]
+                key = upper.find(keyword[index % len(keyword)])
+                result = (number + key) % len(upper)
+                ciphertext += upper[result]
         else:
-            space +=1
-            ciphertext += ' ' 
+            ciphertext += " "
     return ciphertext
 
 
@@ -47,23 +48,21 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    space = 0
     for index, x in enumerate(ciphertext):
-        if x != ' ':
-            t = b.find(x)
-            if t == -1:
-              t = m.find(x)
-              if t == -1:
-                plaintext += x
-              else:
-                k = m.find(keyword[index % len(keyword)])
-                r = (t - k) % len(m)
-                plaintext += m[r]
+        if x != " ":
+            number = upper.find(x)
+            if number == -1:
+                number = lower.find(x)
+                if number == -1:
+                    plaintext += x
+                else:
+                    key = lower.find(keyword[index % len(keyword)])
+                    result = (number - key) % len(lower)
+                    plaintext += lower[result]
             else:
-              k = b.find(keyword[index % len(keyword)])
-              r = (t - k) % len(b)
-              plaintext += b[r]
+                key = upper.find(keyword[index % len(keyword)])
+                result = (number - key) % len(upper)
+                plaintext += upper[result]
         else:
-            space +=1
-            plaintext += ' ' 
+            plaintext += " "
     return plaintext
