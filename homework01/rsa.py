@@ -13,16 +13,13 @@ def is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
-    divisor = 2
     for x in range(2, n):
         if n % x == 0:
-            divisor = 0
-            break
+            return False
     if n != 1:
-        is_prime = divisor == 2
+        return True
     else:
-        is_prime = False
-    return is_prime
+        return False
 
 
 def gcd(a: int, b: int) -> int:
