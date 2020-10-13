@@ -78,10 +78,9 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     max = 0
     for shift in range(26):
         count = 0
-        plaintext = decrypt_caesar(ciphertext, shift) + " "
-        while plaintext > "":
-            word = plaintext[: plaintext.find(" ")]
-            plaintext = plaintext[plaintext.find(" ") + 1 :]
+        plaintext = decrypt_caesar(ciphertext, shift)
+        words = plaintext.split()
+        for word in words:
             if word in dictionary:
                 count += 1
             if count > max:
