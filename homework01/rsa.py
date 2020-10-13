@@ -33,9 +33,7 @@ def gcd(a: int, b: int) -> int:
     """
     if b != 0:
         while a % b != 0:
-            c = a % b
-            a = b
-            b = c
+            a, b = b, a % b
         return b
     else:
         return a
