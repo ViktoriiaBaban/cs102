@@ -2,7 +2,7 @@ import random
 import typing as tp
 
 import pygame
-from pygame.constants import QUIT
+from pygame import QUIT
 from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
@@ -81,13 +81,12 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
-        if not (randomize):
+        if not randomize:
             return [[0 for i in range(0, self.cell_width)] for j in range(0, self.cell_height)]
-        else:
-            return [
-                [random.randint(0, 1) for i in range(0, self.cell_width)]
-                for j in range(0, self.cell_height)
-            ]
+        return [
+            [random.randint(0, 1) for i in range(0, self.cell_width)]
+            for j in range(0, self.cell_height)
+        ]
 
     def draw_grid(self) -> None:
         """
@@ -157,9 +156,11 @@ class GameOfLife:
 
         for i in range(0, self.cell_height):
             for j in range(0, self.cell_width):
-                if ((sum(self.get_neighbours((i, j))) == 2) and (self.grid[i][j] == 1)) or (
-                    sum(self.get_neighbours((i, j))) == 3
-                ):
+                n_neighbours = sum(self.get_neighbours((i, j)))
+                is_alive = self.grid[i][j] == 1
+                if 2 <= n_neighbours <= 3 and is_alive:
+                    next_generation_grid[i][j] = 1
+                elif n_neighbours == 3 and not is_alive:
                     next_generation_grid[i][j] = 1
         return next_generation_grid
 

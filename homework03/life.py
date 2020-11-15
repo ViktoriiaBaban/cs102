@@ -30,7 +30,7 @@ class GameOfLife:
 
     def create_grid(self, randomize: bool = False) -> Grid:
 
-        if not (randomize):
+        if not randomize:
             return [[0 for i in range(0, self.cols)] for j in range(0, self.rows)]
         return [[random.randint(0, 1) for i in range(0, self.cols)] for j in range(0, self.rows)]
 
@@ -56,9 +56,11 @@ class GameOfLife:
 
         for i in range(0, self.rows):
             for j in range(0, self.cols):
-                if (
-                    (sum(self.get_neighbours((i, j))) == 2) and (self.curr_generation[i][j] == 1)
-                ) or (sum(self.get_neighbours((i, j))) == 3):
+                n_neighbours = sum(self.get_neighbours((i, j)))
+                is_alive = self.curr_generation[i][j] == 1
+                if 2 <= n_neighbours <= 3 and is_alive:
+                    next_generation_grid[i][j] = 1
+                elif n_neighbours == 3 and not is_alive:
                     next_generation_grid[i][j] = 1
         return next_generation_grid
 
@@ -66,9 +68,10 @@ class GameOfLife:
         """
         Выполнить один шаг игры.
         """
-        self.prev_generation = self.curr_generation
-        self.curr_generation = self.get_next_generation()
-        self.generations += 1
+        if self.is_max_generations_exceeded:
+            self.prev_generation = self.curr_generation
+            self.curr_generation = self.get_next_generation()
+            self.generations += 1
 
     @property
     def is_max_generations_exceeded(self) -> bool:
