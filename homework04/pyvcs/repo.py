@@ -22,6 +22,8 @@ def repo_find(workdir: tp.Union[str, pathlib.Path] = ".") -> pathlib.Path:
 
 def repo_create(workdir: tp.Union[str, pathlib.Path]) -> pathlib.Path:
 
+    if not os.getenv("GIT_DIR"):
+        os.environ["GIT_DIR"] = ".git"
     workdir = pathlib.Path(workdir)
     if pathlib.Path.is_file(workdir):
         raise Exception(f"{workdir} is not a directory")
