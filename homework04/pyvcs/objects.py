@@ -12,6 +12,8 @@ from pyvcs.repo import repo_find
 
 def hash_object(data: bytes, fmt: str, write: bool = False) -> str:
 
+    if not os.getenv("GIT_DIR"):
+        os.environ["GIT_DIR"] = ".git"
     header = f"{fmt} {len(data)}\0"
     store = header.encode() + data
     hash_file = hashlib.sha1(store).hexdigest()
