@@ -1,5 +1,6 @@
 import pathlib
 import random
+import time
 import typing as tp
 
 T = tp.TypeVar("T")
@@ -87,6 +88,23 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     col = (pos[1] // 3) * 3
     return [grid[row + i][col + j] for i in range(3) for j in range(3)]
 
+def get_diagonal1(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+    """Возвращает все значения из главной диагонали"""
+    
+    row, col = pos
+    if row == col:
+        return [grid[i][j] for i in range(9) for j in range (9) if i == j]
+    else:
+        return []
+
+def get_diagonal2(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+    """Возвращает все значения из побочной диагонали"""
+    
+    row, col = pos
+    if row == len(grid[0]) - (col + 1):
+        return [grid[i][j] for i in range(9) for j in range (9) if i == len(grid[0]) - (j + 1)]
+    else:
+        return []
 
 def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
     """Найти первую свободную позицию в пазле
@@ -120,6 +138,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
         - set(get_row(grid, pos))
         - set(get_col(grid, pos))
         - set(get_block(grid, pos))
+        - set(get_diagonal1(grid, pos))
+        - set(get_diagonal2(grid, pos))
+
     )
     return values
 
@@ -207,11 +228,14 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
 
 
 if __name__ == "__main__":
-    for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
+    for fname in ["puzzle_diagonal_1.txt", "puzzle_diagonal_2.txt", "puzzle_diagonal_3.txt"]:
         grid = read_sudoku(fname)
         display(grid)
+        #start = time.time()
         solution = solve(grid)
+        #end = time.time()
         if not solution:
-            print(f"Puzzle {fname} can't be solved")
+            print(f"Puzzle {fname} can't be solved\n")
         else:
             display(solution)
+            #print(f"{fname}: {end-start}")
