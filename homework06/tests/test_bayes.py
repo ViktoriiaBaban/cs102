@@ -17,7 +17,9 @@ def test_classification_single_words() -> None:
 
 
 def test_classification_messages_dataset() -> None:
-    with (pathlib.Path(__file__).parent.parent / "SMSSpamCollection").open(encoding="utf-8") as file:
+    with (pathlib.Path(__file__).parent.parent / "SMSSpamCollection").open(
+        encoding="utf-8"
+    ) as file:
         dataset = list(csv.reader(file, delimiter="\t"))
     msgs, targets = [], []
     for target, msg in dataset:

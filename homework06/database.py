@@ -1,11 +1,12 @@
-from sqlalchemy import Column, String, Integer
+import typing as tp
+
+from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+
 from scraputils import get_news
-import typing as tp
 
 Base = declarative_base()
 path_news_db = "sqlite:///news.db"

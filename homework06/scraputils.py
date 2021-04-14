@@ -1,6 +1,6 @@
-from re import sub
-import requests
 import typing as tp
+
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -9,28 +9,23 @@ def extract_news(parser: BeautifulSoup) -> tp.List[tp.Dict[str, tp.Union[int, st
 
     news_list = []
 
-    titles = parser.findAll('tr', attrs={'class': 'athing'})
-    subtext = parser.findAll('td', attrs={'class': 'subtext'})
+    titles = parser.findAll("tr", attrs={"class": "athing"})
+    subtext = parser.findAll("td", attrs={"class": "subtext"})
 
     for i in range(len(titles)):
-        a = titles[i].findAll('td', attrs={'class': 'title'})[1].find('a')
+        a = titles[i].findAll("td", attrs={"class": "title"})[1].find("a")
         title = a.get_text()
-        url = a['href']
+        url = a["href"]
 
-        author = subtext[i].find('a', attrs={'class': 'hnuser'})
+        author = subtext[i].find("a", attrs={"class": "hnuser"})
         if author:
             author = author.get_text()
 
-        point = subtext[i].find('span', attrs={'class': 'score'})
+        point = subtext[i].find("span", attrs={"class": "score"})
         if point:
             point = point.get_text()
 
-        news_list.append({
-            'author': author,
-            'points': point,
-            'title': title,
-            'url': url
-        })
+        news_list.append({"author": author, "points": point, "title": title, "url": url})
 
     return news_list
 

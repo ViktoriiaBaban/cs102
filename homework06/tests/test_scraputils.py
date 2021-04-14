@@ -18,7 +18,7 @@ def test_extract_news() -> None:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     current_news = scraputils.extract_news(soup)
-    news_keys = {"author", "points", "title", "url" }
+    news_keys = {"author", "points", "title", "url"}
     assert set(current_news[0].keys()) == news_keys
 
 
