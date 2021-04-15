@@ -1,4 +1,4 @@
-from code import hackernews
+import hackernews
 
 
 def test_clear() -> None:

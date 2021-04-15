@@ -1,4 +1,4 @@
-from code import scraputils
+import scraputils
 
 import requests
 from bs4 import BeautifulSoup
