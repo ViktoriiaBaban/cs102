@@ -3,7 +3,12 @@ import pytest
 from sqlalchemy.engine import create_engine
 
 test_news = [
-    {"title": "Molly was my favorite dog", "url": "yandex.ru", "points": 255, "author": "Torry"},
+    {
+        "title": "Molly was my favorite dog",
+        "url": "yandex.ru",
+        "points": 255,
+        "author": "Torry",
+    },
     {
         "title": "Molly died last year",
         "url": "google.com",
