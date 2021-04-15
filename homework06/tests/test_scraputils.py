@@ -1,4 +1,4 @@
-from code import scraputils
+from hackernews import scraputils
 
 import requests
 from bs4 import BeautifulSoup

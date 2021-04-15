@@ -1,6 +1,6 @@
 import csv
 import pathlib
-from code import bayes, hackernews
+from hackernews import bayes, hackernews
 
 
 def test_classification_single_words() -> None:
@@ -16,7 +16,7 @@ def test_classification_single_words() -> None:
 
 
 def test_classification_messages_dataset() -> None:
-    with (pathlib.Path(__file__).parent.parent / "code/SMSSpamCollection").open(
+    with (pathlib.Path(__file__).parent.parent / "hackernews/SMSSpamCollection").open(
         encoding="utf-8"
     ) as file:
         dataset = list(csv.reader(file, delimiter="\t"))

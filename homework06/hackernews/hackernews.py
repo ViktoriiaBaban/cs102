@@ -1,9 +1,11 @@
 import string
 import typing as tp
 
-from bayes import NaiveBayesClassifier
+from sqlalchemy.orm import session
+from sqlalchemy.sql.expression import label
+from hackernews.bayes import NaiveBayesClassifier
 from bottle import redirect, request, route, run, template
-from database import News, change_label, engine, get_new_news, get_session
+from hackernews.database import News, change_label, engine, get_new_news, get_session
 
 
 @tp.no_type_check

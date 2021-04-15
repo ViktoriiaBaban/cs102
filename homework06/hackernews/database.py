@@ -1,6 +1,6 @@
 import typing as tp
 
-from scraputils import get_news
+from hackernews.scraputils import get_news
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base

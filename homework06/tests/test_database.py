@@ -1,4 +1,4 @@
-from code import database
+from hackernews import database
 
 import pytest
 from sqlalchemy.engine import create_engine
