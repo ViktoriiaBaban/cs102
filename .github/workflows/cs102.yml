@@ -17,10 +17,10 @@ jobs:
         pip install black mypy pylint pytest httptools
     - name: Run black
       run: |
-        black -l 100 --check --diff --color --exclude "test*" ${{ github.head_ref }}
+        black -l 100 --check --diff --color --exclude "test*" homework07-web
     - name: Run mypy
       run: |
-        mypy --ignore-missing-imports ${{ github.head_ref }} --strict --exclude "tests"
+        mypy --ignore-missing-imports homework07-web --strict --exclude "tests"
     - name: Run pylint
       run: |
-        pylint --exit-zero ${{ github.head_ref }}
+        pylint --exit-zero homework07-web
