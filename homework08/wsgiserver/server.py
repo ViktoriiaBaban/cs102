@@ -5,6 +5,7 @@ from httpserver import BaseHTTPRequestHandler, HTTPServer
 from .request import WSGIRequest
 from .response import WSGIResponse
 
+
 ApplicationType = tp.Any
 
 
