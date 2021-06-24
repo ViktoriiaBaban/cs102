@@ -23,6 +23,3 @@ class CORSMiddleware(Middleware):
             response.headers.update(cors_headers)
 
             return response
-
-            return response
-

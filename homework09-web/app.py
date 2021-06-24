@@ -7,6 +7,7 @@ from slowapi.security import Security
 
 application = SlowAPI()
 notes: tp.Dict[int, tp.Dict[str, tp.Any]] = {}
+
 JWT_SECRET = "secret"
 JWT_ALGORITHM = "HS256"
 JWT_EXP_DELTA_SECONDS = 300
@@ -68,7 +69,7 @@ def main():
     server = WSGIServer(port=8080, request_handler_cls=WSGIRequestHandler)
     server.set_app(application)
     server.serve_forever()
-    #
-    #
-    if __name__ == "__main__":
-        main()
+
+
+ if __name__ == "__main__":
+     main()

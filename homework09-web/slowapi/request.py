@@ -13,8 +13,7 @@ class Request:
     headers: tp.Dict[str, str] = dataclasses.field(default_factory=dict)
 
     def text(self) -> str:
-        return self.body.read().decode('UTF-8')
+        return self.body.read().decode("UTF-8")
 
     def json(self) -> tp.Dict[str, tp.Any]:
         return json.load(self.body)
-

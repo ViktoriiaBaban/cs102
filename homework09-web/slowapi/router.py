@@ -10,11 +10,11 @@ class Route:
     path: str
     method: str
     func: tp.Callable
-        
+
     def matches(self, request):
         args = []
-        req_path_spl = request.path.split('/')
-        path_spl = self.path.split('/')
+        req_path_spl = request.path.split("/")
+        path_spl = self.path.split("/")
         if request.method != self.method:
             return False
         if len(path_spl) == len(req_path_spl):
@@ -22,18 +22,18 @@ class Route:
                 if path_spl[i] != req_path_spl[i]:
                     return False
                 else:
-                    if path_spl[i].startswith('{') and path_spl[i].endswith('}'):
+                    if path_spl[i].startswith("{") and path_spl[i].endswith("}"):
                         args.append(req_path_spl[i])
             return True
         return False
 
     def parse_args(self, request):
-        path_spl = self.path.split('/')
-        req_path_spl = request.path.split('/')
+        path_spl = self.path.split("/")
+        req_path_spl = request.path.split("/")
         args = []
         if len(path_spl) == len(req_path_spl):
             for i in range(len(req_path_spl)):
-                if path_spl[i].startswith('{') and path_spl[i].endswith('}'):
+                if path_spl[i].startswith("{") and path_spl[i].endswith("}"):
                     args.append(req_path_spl[i])
             return args
 
@@ -50,8 +50,9 @@ class Router:
             if route.matches(request):
                 return route.handle(request)
         status = http.HTTPStatus(404)
-        return Response(status.value, {},
-                        body='\n'.join([str(status.value), status.phrase, status.description]))
+        return Response(
+            status.value, {}, body="\n".join([str(status.value), status.phrase, status.description])
+        )
 
     def add_route(self, route: Route):
         self.routes.append(route)

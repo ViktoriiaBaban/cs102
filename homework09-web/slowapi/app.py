@@ -19,27 +19,27 @@ class SlowAPI:
                 headers[k[5:].lower()] = environ[k]
         query: tp.Dict[str, any] = {}
 
-        for i, j in parse_qsl(environ['QUERY_STRING'] or ''):
-            query[i] = j
+        for query_var, query_val in parse_qsl(environ.get("QUERY_STRING", "")):
+            query[query_var] = query_val
 
         request = Request(
-            path=environ['PATH_INFO'].rstrip('/') or '/',
-            method=environ['REQUEST_METHOD'],
+            path=environ.get("PATH_INFO").rstrip("/") or "/",
+            method=environ.get("REQUEST_METHOD"),
             query=query,
             headers=headers,
-            body=environ['wsgi.input']
+            body=environ.get("wsgi.input"),
         )
         answer = self.router.resolve(request)
         status = http.HTTPStatus(answer.status)
-        start_response(' '.join([str(status.value), status.phrase]), answer.headers)
+        start_response(" ".join([str(status.value), status.phrase]), answer.headers)
         if answer.body is not None:
             return answer.body.encode()
         else:
-            return b''
+            return b""
 
     def route(self, path=None, method=None, **options):
         def decorator(func: tp.Callable):
-            route = Route(path.rstrip('/'), method, func)
+            route = Route(path.rstrip("/"), method, func)
             self.router.add_route(route)
             return func
 
@@ -48,7 +48,7 @@ class SlowAPI:
     def get(self, path=None, **options):
         return self.route(path, method="GET", **options)
 
-    def post(self, path=None, func=None, **options):
+    def post(self, path=None, **options):
         return self.route(path, method="POST", **options)
 
     def patch(self, path=None, **options):
@@ -62,4 +62,3 @@ class SlowAPI:
 
     def add_middleware(self, middleware: tp.Type[Middleware]) -> None:
         self.middlewares.append(middleware)
-
