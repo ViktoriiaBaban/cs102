@@ -82,7 +82,7 @@ def authenticate_user(username: str, password: str) -> Union[bool, UserInDB]:
 
     if not user:
         return False
-    
+
     if not verify_password(password, user.password):
         return False
 
