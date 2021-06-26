@@ -80,9 +80,10 @@ def create_user(username: str, password: str) -> UserInDB:
 def authenticate_user(username: str, password: str) -> Union[bool, UserInDB]:
     user = get_user(username)
 
-    if not verify_password(password, user.password):
-        return False
     if not user:
+        return False
+    
+    if not verify_password(password, user.password):
         return False
 
     return user
